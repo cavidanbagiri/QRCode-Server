@@ -1,16 +1,23 @@
 
 const QRCode = require('qrcode');
 
+const tryCatch = require('../utils/tryCatch');
+const { GenerateQRCodeService } = require('../services/qrcode.service');
+
 class QRCodeController {
 
-    static async generateCode(req, res) {
+    static async generateQRCode(req, res) {
 
         const test_url = req.params.url;
 
-        QRCode.toDataURL(test_url, (err, url) => {
-            if (err) throw err;
-            res.status(200).send(url);
-        })
+        tryCatch(
+            await GenerateQRCodeService.generateQRCode(test_url)
+            .then((respond)=>{
+                res.status(201).send(respond);
+            }).catch((err)=>{
+                res.status(400).send(err);
+            })
+        )
 
     }
 

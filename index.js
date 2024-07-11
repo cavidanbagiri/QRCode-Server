@@ -4,6 +4,10 @@ const app = express();
 const cors = require('cors');
 
 
+// Import Sequeelize
+const { sequelize } = require('./models');
+
+
 // Import Dotenv file
 require('dotenv').config()
 const PORT = process.env.PORT || 3001
@@ -14,7 +18,8 @@ app.use(express.json());
 
 
 // Import Routers
-const {QRCodeRouter} = require ('./src/router');
+const { QRCodeRouter, UserRouter } = require('./src/router');
+
 
 // Using Cors
 app.use(cors(
@@ -26,11 +31,30 @@ app.use(cors(
 
 
 // Using Routers
-app.use('/api/qrcode', QRCodeRouter);
+app.use('/api', QRCodeRouter);
+app.use('/api/user', UserRouter);
 
 
-// Listen The Ports
-app.listen(PORT, () => {
-    console.log(`Example app listening at http://localhost:${PORT}`);
-});
+// Starting Database and backend project
+const startApp = async () => {
 
+    try {
+
+        try {
+            await sequelize.authenticate();
+        } catch (error) {
+            console.error('Unable to connect to the database:', error);
+        }
+
+        app.listen(PORT, () => {
+            console.log('server listening on : ', PORT);
+        });
+
+    }
+    catch (err) {
+        console.log('Internal Server Error : ', err);
+    }
+
+}
+
+startApp();
