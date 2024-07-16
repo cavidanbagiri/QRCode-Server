@@ -74,7 +74,7 @@ class UserServiceLogin{
         id: find_user.id,
         email: find_user.email,
         is_admin: find_user.is_admin,
-        status_code: find_user.dataValues.UserStatusModel.dataValues.status_code
+        // status_code: find_user.dataValues.UserStatusModel.dataValues.status_code
       }
       const tokens = TokenService.generateToken(find_user_data);
 
@@ -101,14 +101,14 @@ class UserServiceLogin{
       where:{
         email: email,
       },
-      include: {
-        model: UserStatusModels,
-        attributes: ['id', 'status_code', 'status_name']
-      }
+      // include: {
+      //   model: UserStatusModels,
+      //   attributes: ['id', 'status_code', 'status_name']
+      // }
     });
 
     if(find_user){
-      console.log(find_user.dataValues.UserStatusModel.dataValues);
+      // console.log(find_user.dataValues.UserStatusModel.dataValues);
       const hashing_password = hashPassword(password);
       if(find_user.password === hashing_password){
         return find_user

@@ -76,6 +76,7 @@ class UserController{
 
   // Refresh Token
   static async refresh(req, res, next) {
+    console.log('req is  : ', req.cookies);
     const {refreshToken} = req.cookies;
     if(refreshToken){
 

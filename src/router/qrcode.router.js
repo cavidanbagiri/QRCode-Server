@@ -10,7 +10,7 @@ router.get('/', (req, res) => {
     res.send('Hello World!');
 })
 
-router.get('/generateqrcode/:url', QRCodeController.generateQRCode);
+router.post('/generateqrcode', QRCodeController.generateQRCode);
 
 
 module.exports = router;

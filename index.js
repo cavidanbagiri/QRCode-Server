@@ -3,6 +3,8 @@ const express = require('express');
 const app = express();
 const cors = require('cors');
 
+// Import cookieParser for using Frontend sending
+const cookieParser = require("cookie-parser");
 
 // Import Sequeelize
 const { sequelize } = require('./models');
@@ -15,10 +17,10 @@ const PORT = process.env.PORT || 3001
 
 // Import Express JSON Middleware
 app.use(express.json());
-
+app.use(cookieParser());
 
 // Import Routers
-const { QRCodeRouter, UserRouter } = require('./src/router');
+const { QRCodeRouter, UserRouter, RestaurantRouter } = require('./src/router');
 
 
 // Using Cors
@@ -32,6 +34,7 @@ app.use(cors(
 
 // Using Routers
 app.use('/api', QRCodeRouter);
+app.use('/api/restaurant', RestaurantRouter);
 app.use('/api/user', UserRouter);
 
 

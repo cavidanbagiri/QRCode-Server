@@ -8,13 +8,15 @@ class QRCodeController {
 
     static async generateQRCode(req, res) {
 
-        const test_url = req.params.url;
+        const data = req.body;
 
         tryCatch(
-            await GenerateQRCodeService.generateQRCode(test_url)
+            await GenerateQRCodeService.generateQRCode(data)
             .then((respond)=>{
+                console.log('enter respond');
                 res.status(201).send(respond);
             }).catch((err)=>{
+                console.log('enter error');
                 res.status(400).send(err);
             })
         )
